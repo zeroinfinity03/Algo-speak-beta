@@ -5,6 +5,8 @@ import { useState, useRef, useId, useEffect } from "react";
 
 interface SlideData {
   title: string;
+  subtitle?: string;
+  content?: string[];
   button: string;
   src: string;
 }
@@ -58,7 +60,7 @@ const Slide = ({ slide, index, current, handleSlideClick }: SlideProps) => {
     event.currentTarget.style.opacity = "1";
   };
 
-  const { src, button, title } = slide;
+  const { src, button, title, subtitle, content } = slide;
 
   return (
     <div className="[perspective:1200px] [transform-style:preserve-3d]">
@@ -86,30 +88,55 @@ const Slide = ({ slide, index, current, handleSlideClick }: SlideProps) => {
                 : "none",
           }}
         >
-          <img
-            className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] object-cover opacity-100 transition-opacity duration-600 ease-in-out"
-            style={{
-              opacity: current === index ? 1 : 0.5,
-            }}
-            alt={title}
-            src={src}
-            onLoad={imageLoaded}
-            loading="eager"
-            decoding="sync"
-          />
-          {current === index && (
-            <div className="absolute inset-0 bg-black/30 transition-all duration-1000" />
+          {src && src.trim() !== "" ? (
+            <>
+              <img
+                className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] object-cover opacity-100 transition-opacity duration-600 ease-in-out"
+                style={{
+                  opacity: current === index ? 1 : 0.5,
+                }}
+                alt={title}
+                src={src}
+                onLoad={imageLoaded}
+                loading="eager"
+                decoding="sync"
+              />
+              {current === index && (
+                <div className="absolute inset-0 bg-black/60 transition-all duration-1000" />
+              )}
+            </>
+          ) : (
+            // Solid background for slides without images
+            <div className="absolute inset-0 bg-gradient-to-br from-slate-800 via-slate-700 to-slate-900" />
           )}
         </div>
         <article
-          className={`relative p-[4vmin] transition-opacity duration-1000 ease-in-out ${current === index ? "opacity-100 visible" : "opacity-0 invisible"
+          className={`relative p-[3vmin] max-w-4xl transition-opacity duration-1000 ease-in-out overflow-y-auto max-h-[60vmin] ${current === index ? "opacity-100 visible" : "opacity-0 invisible"
             }`}
         >
-          <h2 className="text-lg md:text-2xl lg:text-4xl font-semibold  relative">
+          <h2 className="text-lg md:text-2xl lg:text-3xl font-bold mb-2 relative">
             {title}
           </h2>
+          {subtitle && (
+            <h3 className="text-sm md:text-lg lg:text-xl font-medium mb-4 text-gray-200 relative">
+              {subtitle}
+            </h3>
+          )}
+          {content && (
+            <div className="text-left text-xs md:text-sm lg:text-base space-y-1 mb-6 relative">
+              {content.map((line, idx) => (
+                <div key={idx} className={line === "" ? "h-2" : ""}>
+                  {line && (
+                    <p className={line.startsWith("•") ? "ml-4" : line.startsWith("🔍") || line.startsWith("📊") || line.startsWith("🏗️") || line.startsWith("🤖") || line.startsWith("⚙️") || line.startsWith("📈") || line.startsWith("❌") || line.startsWith("✅") || line.startsWith("🏆") || line.startsWith("🚀") || line.startsWith("💼") || line.startsWith("🌍") || line.startsWith("🔮") ? "font-semibold text-yellow-300 mt-3" : ""}>
+                      {line}
+                    </p>
+                  )}
+                </div>
+              ))}
+            </div>
+          )}
           <div className="flex justify-center">
-            <button className="mt-6  px-4 py-2 w-fit mx-auto sm:text-sm text-black bg-white h-12 border border-transparent text-xs flex justify-center items-center rounded-2xl hover:shadow-lg transition duration-200 shadow-[0px_2px_3px_-1px_rgba(0,0,0,0.1),0px_1px_0px_0px_rgba(25,28,33,0.02),0px_0px_0px_1px_rgba(25,28,33,0.08)]">
+            <button className="px-6 py-3 w-fit mx-auto text-sm text-black bg-white border border-transparent flex justify-center items-center rounded-2xl hover:shadow-lg hover:bg-gray-100 transition duration-200 shadow-[0px_2px_3px_-1px_rgba(0,0,0,0.1),0px_1px_0px_0px_rgba(25,28,33,0.02),0px_0px_0px_1px_rgba(25,28,33,0.08)]">
               {button}
             </button>
           </div>
