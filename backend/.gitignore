@@ -1,0 +1,86 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Model files (EXCLUDE - too large for Git)
+*.bin
+*.safetensors
+*.pt
+*.pth
+*.ckpt
+*.gguf
+*_adapters.zip
+qwen-algospeak-lora/
+*/adapter_model.bin
+*/adapter_config.json
+
+# Raw model folder (EXCLUDE - 5.8GB too large for Git)
+raw_model/
+
+# Training artifacts (EXCLUDE - generated during training)
+wandb/
+.wandb/
+runs/
+tensorboard_logs/
+checkpoints/
+logs/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Hugging Face cache
+.huggingface/
+.cache/huggingface/
+
+# Large CSV files (EXCLUDE - too big for Git)
+*.csv
+finetunning/dataset/*.csv
+train.csv
+test.csv
+
+# NOTE: JSON training data files are ALLOWED to be committed
+# CSV files are EXCLUDED due to size (train.csv ~778MB, test.csv ~29MB) 
