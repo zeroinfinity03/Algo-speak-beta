@@ -116,32 +116,3 @@ def classify_text(text: str, model_name: str = "qwen-algospeak") -> Dict[str, st
     classifier = SimpleClassifier(model_name)
     return classifier.classify(text)
 
-# Quick test (only works if Ollama is running with your model)
-if __name__ == "__main__":
-    classifier = SimpleClassifier()
-    
-    test_cases = [
-        "I want to unalive myself",
-        "I killed it at work today", 
-        "Great job on the presentation!"
-    ]
-    
-    print("\n🧪 TESTING SIMPLE CLASSIFIER:")
-    print("=" * 50)
-    
-    for text in test_cases:
-        print(f"\n📝 Input: '{text}'")
-        result = classifier.classify(text)
-        
-        if 'error' in result:
-            print(f"❌ Error: {result['error']}")
-        else:
-            print(f"🔄 Normalized: '{result['normalized_text']}'")
-            print(f"🎯 Classification: {result['classification']}")
-
-
-
-
-
-
-

@@ -91,25 +91,4 @@ def normalize_text(text: str) -> str:
     normalizer = SimpleNormalizer()
     return normalizer.normalize(text)
 
-# Quick test
-if __name__ == "__main__":
-    normalizer = SimpleNormalizer()
-    
-    # Test cases from README
-    test_cases = [
-        "I want to unalive myself",
-        "This is seggs content", 
-        "He got unalived in the game",
-        "Time for sewer slide",
-        "This is normal text"
-    ]
-    
-    print("\n🧪 TESTING SIMPLE NORMALIZER:")
-    print("=" * 40)
-    
-    for text in test_cases:
-        normalized = normalizer.normalize(text)
-        if text != normalized:
-            print(f"✅ '{text}' → '{normalized}'")
-        else:
-            print(f"➡️  '{text}' (no changes)")
+
