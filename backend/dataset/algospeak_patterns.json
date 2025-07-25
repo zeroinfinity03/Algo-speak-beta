@@ -320,6 +320,18 @@
       "blink in lio"
     ]
   },
+  "safe_context_patterns": {
+    "killed it at work": "succeeded at work",
+    "killed it in the presentation": "did great in the presentation", 
+    "killed it today": "performed excellently today",
+    "died laughing": "found very funny",
+    "this movie killed me": "this movie was hilarious",
+    "that joke killed me": "that joke was hilarious",
+    "my phone died": "my phone battery ran out",
+    "battery died": "battery ran out",
+    "presentation was killer": "presentation was excellent",
+    "song is killer": "song is excellent"
+  },
   "transformation_families": {
     "leetspeak": "Character-to-number substitutions",
     "phonetic": "Sound-alike replacements",
@@ -327,6 +339,7 @@
     "semantic": "Meaning-preserving code words",
     "multiword": "Phrase-based inside jokes",
     "initialism": "Acronym and abbreviation evasion",
-    "numeric": "Number-based code systems"
+    "numeric": "Number-based code systems",
+    "safe_context": "Common safe expressions that use harmful-sounding words"
   }
 }

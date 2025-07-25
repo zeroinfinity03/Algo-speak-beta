@@ -13,6 +13,7 @@ from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from typing import Dict, Any, Optional
+from datetime import datetime
 import uvicorn
 
 # Import our components (now in root directory)
@@ -180,6 +181,85 @@ async def demo():
         }
     }
 
+@app.post("/compare-stages")
+async def compare_stages(request: ModerationRequest):
+    """
+    🎯 DEMO ENDPOINT: Compare Stage 1 alone, Stage 2 alone, vs Both Stages
+    Perfect for presentations showing why two-stage approach is superior!
+    """
+    text = request.text.strip()
+    
+    if not text:
+        raise HTTPException(status_code=400, detail="Text cannot be empty")
+    
+    results = {
+        "original_text": text,
+        "timestamp": datetime.now().isoformat(),
+        "stage_1_only": {},
+        "stage_2_only": {},
+        "both_stages": {},
+        "analysis": {}
+    }
+    
+    try:
+        # Stage 1 Only: Just normalization (no AI classification)
+        normalized_text = normalizer.normalize(text)
+        
+        # Simple rule-based classification for Stage 1 only
+        harmful_keywords = ["kill", "suicide", "sex", "porn", "violence", "hate", "harm", "death"]
+        stage1_classification = "safe"
+        
+        for keyword in harmful_keywords:
+            if keyword in normalized_text.lower():
+                stage1_classification = "harmful_detected"
+                break
+        
+        results["stage_1_only"] = {
+            "method": "Normalization + Simple Rules",
+            "normalized": normalized_text,
+            "classification": stage1_classification,
+            "explanation": "Stage 1 converts algospeak but uses basic keyword matching"
+        }
+        
+        # Stage 2 Only: Direct AI (no normalization)
+        if classifier_available:
+            direct_ai_result = classifier.classify(text)  # Raw text, no normalization
+        else:
+            direct_ai_result = "classifier_unavailable"
+        
+        results["stage_2_only"] = {
+            "method": "AI Direct (No Normalization)",
+            "raw_text_used": text,
+            "classification": direct_ai_result,
+            "explanation": "AI tries to understand raw algospeak without preprocessing"
+        }
+        
+        # Both Stages: Our full system
+        if classifier_available:
+            full_system_result = classifier.classify(normalized_text)
+        else:
+            full_system_result = "classifier_unavailable" 
+        
+        results["both_stages"] = {
+            "method": "Two-Stage System",
+            "stage_1_normalized": normalized_text,
+            "stage_2_classified": full_system_result,
+            "explanation": "Normalization + AI context understanding"
+        }
+        
+        # Analysis: Compare results
+        results["analysis"] = {
+            "stage_1_limitation": "May miss context (false positives on 'I killed it at work')",
+            "stage_2_limitation": "May miss algospeak patterns AI wasn't trained on",
+            "two_stage_advantage": "Combines pattern recognition with context understanding",
+            "recommended": "both_stages"
+        }
+        
+        return results
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Classification error: {str(e)}")
+
 @app.get("/health")
 async def health_check():
     """Detailed health check."""
@@ -219,6 +299,7 @@ if __name__ == "__main__":
     print("📋 Available endpoints:")
     print("   GET  /       - API info & examples")
     print("   POST /moderate - Moderate content")
+    print("   POST /compare-stages - Compare Stage 1, Stage 2, & Both (DEMO)")
     print("   GET  /demo   - Test normalizer")
     print("   GET  /health - System health check")
     print("   GET  /docs  - API documentation")

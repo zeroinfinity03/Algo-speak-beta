@@ -138,3 +138,10 @@ if __name__ == "__main__":
         else:
             print(f"🔄 Normalized: '{result['normalized_text']}'")
             print(f"🎯 Classification: {result['classification']}")
+
+
+
+
+
+
+

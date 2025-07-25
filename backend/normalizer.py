@@ -17,7 +17,7 @@ class SimpleNormalizer:
     """Simple algospeak pattern replacer."""
     
     def __init__(self):
-        """Load algospeak patterns from JSON."""
+        """Load algospeak patterns and safe context patterns from JSON."""
         # Load patterns from our centralized dataset location
         patterns_file = Path(__file__).parent / "dataset/algospeak_patterns.json"
         
@@ -35,22 +35,35 @@ class SimpleNormalizer:
         self.patterns.update(data.get("misspellings", {}))
         self.patterns.update(data.get("leetspeak", {}))
         
+        # Load safe context patterns
+        self.safe_patterns = data.get("safe_context_patterns", {})
+        
         print(f"✅ Loaded {len(self.patterns)} algospeak patterns")
+        print(f"✅ Loaded {len(self.safe_patterns)} safe context patterns")
     
     def normalize(self, text: str) -> str:
         """
-        Replace algospeak patterns with normal words.
+        Replace algospeak patterns with normal words and safe context patterns with safe expressions.
         
         Args:
-            text: Input text like "I want to unalive myself"
+            text: Input text like "I want to unalive myself" or "I killed it at work"
             
         Returns:
-            Normalized text like "I want to kill myself"
+            Normalized text like "I want to kill myself" or "I succeeded at work"
         """
         normalized = text
         replacements_made = []
         
-        # Replace each pattern (case-insensitive, whole words)
+        # First, check for safe context patterns (longer phrases first)
+        for safe_phrase, safe_replacement in sorted(self.safe_patterns.items(), key=len, reverse=True):
+            # Create regex pattern for phrase replacement (case-insensitive)
+            pattern = re.escape(safe_phrase)
+            
+            if re.search(pattern, normalized, re.IGNORECASE):
+                normalized = re.sub(pattern, safe_replacement, normalized, flags=re.IGNORECASE)
+                replacements_made.append(f'"{safe_phrase}" → "{safe_replacement}" (safe context)')
+        
+        # Then replace algospeak patterns (case-insensitive, whole words)
         for algospeak, normal in self.patterns.items():
             # Create regex pattern for whole word replacement
             pattern = r'\b' + re.escape(algospeak) + r'\b'
