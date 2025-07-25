@@ -322,10 +322,12 @@
   },
   "safe_context_patterns": {
     "killed it at work": "succeeded at work",
-    "killed it in the presentation": "did great in the presentation", 
+    "killed it in the presentation": "did great in the presentation",
     "killed it today": "performed excellently today",
     "died laughing": "found very funny",
     "this movie killed me": "this movie was hilarious",
+    "that movie killed me": "that movie was hilarious",
+    "this joke killed me": "this joke was hilarious",
     "that joke killed me": "that joke was hilarious",
     "my phone died": "my phone battery ran out",
     "battery died": "battery ran out",

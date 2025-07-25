@@ -11,7 +11,7 @@ Simple approach: Call Ollama API with fine-tuned model
 
 import requests
 import json
-from typing import Dict, Optional
+from typing import Dict, Optional, Any
 import sys
 from pathlib import Path
 
@@ -49,12 +49,12 @@ class SimpleClassifier:
             print(f"❌ Ollama connection failed: {e}")
             print("💡 Make sure Ollama is running: ollama serve")
     
-    def classify(self, text: str) -> Dict[str, str]:
+    def classify(self, text: str) -> Dict[str, Any]:
         """
-        Classify content as harmful or safe.
+        Classify text as harmful or safe using fine-tuned model via Ollama
         
         Args:
-            text: Input text (can contain algospeak)
+            text: Input text to classify
             
         Returns:
             Dictionary with classification results
@@ -62,13 +62,23 @@ class SimpleClassifier:
         # Step 1: Normalize algospeak
         normalized_text = self.normalizer.normalize(text)
         
-        # Step 2: Create simple classification prompt  
+        # Step 2: Build safe context examples for AI
+        safe_examples = []
+        for safe_phrase, meaning in list(self.normalizer.safe_patterns.items())[:8]:  # Use top 8 patterns
+            safe_examples.append(f'"{safe_phrase}" = {meaning}')
+        
+        safe_context = "\n".join(safe_examples)
+        
+        # Step 3: Create enhanced classification prompt with safe patterns
         prompt = f"""Classify this text as harmful or safe. Give a short answer.
+
+Context: These phrases are SAFE work/casual expressions:
+{safe_context}
 
 Text: "{normalized_text}"
 Classification:"""
 
-        # Step 3: Call Ollama API
+        # Step 4: Call Ollama API
         try:
             payload = {
                 "model": self.model_name,
