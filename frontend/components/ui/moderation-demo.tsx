@@ -6,6 +6,8 @@ import {
     IconPlayerSkipForward,
     IconVolume3,
     IconLoader2,
+    IconShield,
+    IconScan,
 } from "@tabler/icons-react";
 
 interface ModerationResult {
@@ -56,122 +58,277 @@ export function ModerationDemo() {
         }
     };
     return (
-        <div className="h-full w-full flex flex-col">
-            <div className="flex items-center justify-between mb-6">
-                <h3 className="text-lg font-bold text-black dark:text-white flex items-center gap-2">
-                    <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
-                    AI Content Moderation
-                </h3>
-            </div>
-            <div className="mb-4">
-                <div className="flex items-center justify-between mb-2">
-                    <label className="text-sm font-medium text-black dark:text-white">
-                        Content Analysis
-                    </label>
-                    <span className="text-xs text-gray-500 dark:text-gray-400 flex items-center gap-1">
-                        <div className="w-1.5 h-1.5 rounded-full bg-blue-500 animate-pulse"></div>
-                        Real-time scanning
-                    </span>
+        <div className="h-full w-full flex flex-col p-6 rounded-3xl bg-white/30 dark:bg-white/5 backdrop-blur-xl border border-white/40 dark:border-white/20 shadow-2xl shadow-black/10 dark:shadow-black/50 relative overflow-hidden"
+             style={{
+                 boxShadow: `
+                     inset 1px 1px 0px rgba(255, 255, 255, 0.7),
+                     inset -1px -1px 0px rgba(255, 255, 255, 0.7),
+                     0px 8px 24px rgba(0, 0, 0, 0.15),
+                     inset 0px 4px 8px rgba(255, 255, 255, 0.4)
+                 `
+             }}>
+            
+            {/* Header */}
+            <div className="flex items-center justify-between mb-8">
+                <div className="flex items-center gap-3">
+                    <div className="p-2.5 rounded-2xl bg-white/40 dark:bg-white/10 backdrop-blur-sm border border-white/60 dark:border-white/20"
+                         style={{
+                             boxShadow: `
+                                 inset 1px 1px 0px rgba(255, 255, 255, 0.8),
+                                 inset -1px -1px 0px rgba(255, 255, 255, 0.8)
+                             `
+                         }}>
+                        <IconShield className="w-5 h-5 text-gray-700 dark:text-gray-300" />
+                    </div>
+                    <div>
+                        <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200">
+                            AI Content Moderation
+                        </h3>
+                        <p className="text-sm text-gray-600 dark:text-gray-400">
+                            Two-stage algospeak detection
+                        </p>
+                    </div>
                 </div>
+                <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/50 dark:bg-white/10 backdrop-blur-sm border border-white/60 dark:border-white/20"
+                     style={{
+                         boxShadow: `
+                             inset 1px 1px 0px rgba(255, 255, 255, 0.8),
+                             inset -1px -1px 0px rgba(255, 255, 255, 0.8)
+                         `
+                     }}>
+                    <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
+                    <span className="text-xs font-medium text-gray-700 dark:text-gray-300">Live</span>
+                </div>
+            </div>
+
+            {/* Input Section */}
+            <div className="mb-6">
+                <label className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-3 block">
+                    Content Analysis
+                </label>
                 <div className="relative">
                     <textarea
-                        className="w-full p-3 border border-gray-200 dark:border-neutral-800 rounded-lg bg-white dark:bg-neutral-800/50 text-black dark:text-white text-sm backdrop-blur-sm focus:border-blue-500 dark:focus:border-blue-400 transition-colors placeholder:text-gray-400/60 dark:placeholder:text-gray-500/60"
-                        rows={2}
+                        className="w-full p-4 bg-white/40 dark:bg-white/10 backdrop-blur-sm border border-white/50 dark:border-white/20 rounded-2xl text-gray-800 dark:text-gray-200 text-sm focus:border-white/70 dark:focus:border-white/30 focus:outline-none transition-all duration-300 placeholder:text-gray-500/70 dark:placeholder:text-gray-400/70 resize-none"
+                        rows={3}
                         placeholder="Enter your content for AI moderation... (try: 'I want to unalive myself')"
                         value={inputText}
                         onChange={(e) => setInputText(e.target.value)}
                         disabled={isLoading}
+                        style={{
+                            boxShadow: `
+                                inset 1px 1px 0px rgba(255, 255, 255, 0.6),
+                                inset -1px -1px 0px rgba(255, 255, 255, 0.6),
+                                inset 0px 4px 8px rgba(255, 255, 255, 0.3)
+                            `
+                        }}
                     />
-                    <div className="absolute right-2 bottom-2 flex gap-2">
-                        <button className="p-1.5 rounded-md hover:bg-gray-100 dark:hover:bg-neutral-700 transition-colors">
-                            <IconVolume3 className="w-4 h-4 text-gray-500 dark:text-gray-400" />
+                    <div className="absolute right-3 bottom-3 flex gap-1">
+                        <button className="p-2 rounded-xl bg-white/30 dark:bg-white/10 backdrop-blur-sm hover:bg-white/50 dark:hover:bg-white/20 transition-all duration-200 group border border-white/40 dark:border-white/20"
+                                style={{
+                                    boxShadow: `
+                                        inset 1px 1px 0px rgba(255, 255, 255, 0.7),
+                                        inset -1px -1px 0px rgba(255, 255, 255, 0.7)
+                                    `
+                                }}>
+                            <IconVolume3 className="w-4 h-4 text-gray-600 dark:text-gray-400 group-hover:text-gray-800 dark:group-hover:text-gray-200" />
                         </button>
-                        <button className="p-1.5 rounded-md hover:bg-gray-100 dark:hover:bg-neutral-700 transition-colors">
-                            <IconBrightnessUp className="w-4 h-4 text-gray-500 dark:text-gray-400" />
+                        <button className="p-2 rounded-xl bg-white/30 dark:bg-white/10 backdrop-blur-sm hover:bg-white/50 dark:hover:bg-white/20 transition-all duration-200 group border border-white/40 dark:border-white/20"
+                                style={{
+                                    boxShadow: `
+                                        inset 1px 1px 0px rgba(255, 255, 255, 0.7),
+                                        inset -1px -1px 0px rgba(255, 255, 255, 0.7)
+                                    `
+                                }}>
+                            <IconBrightnessUp className="w-4 h-4 text-gray-600 dark:text-gray-400 group-hover:text-gray-800 dark:group-hover:text-gray-200" />
                         </button>
                     </div>
                 </div>
             </div>
+
+            {/* Analyze Button */}
             <button 
                 onClick={analyzeContent}
                 disabled={isLoading || !inputText.trim()}
-                className="bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed text-white px-4 py-2.5 rounded-lg font-medium transition-all text-sm mb-4 flex items-center justify-center gap-2 group"
+                className="bg-white/50 dark:bg-white/15 hover:bg-white/70 dark:hover:bg-white/25 disabled:bg-white/20 dark:disabled:bg-white/5 disabled:cursor-not-allowed text-gray-800 dark:text-gray-200 px-6 py-3 rounded-2xl font-medium transition-all duration-300 text-sm mb-6 flex items-center justify-center gap-3 group backdrop-blur-sm border border-white/60 dark:border-white/20"
+                style={{
+                    boxShadow: `
+                        inset 1px 1px 0px rgba(255, 255, 255, 0.8),
+                        inset -1px -1px 0px rgba(255, 255, 255, 0.8),
+                        0px 4px 12px rgba(0, 0, 0, 0.1),
+                        inset 0px 4px 8px rgba(255, 255, 255, 0.4)
+                    `
+                }}
             >
                 {isLoading ? (
                     <>
-                        <IconLoader2 className="w-4 h-4 animate-spin" />
-                        Analyzing...
+                        <IconLoader2 className="w-5 h-5 animate-spin" />
+                        <span>Analyzing Content...</span>
                     </>
                 ) : (
                     <>
-                        Analyze Content
-                        <IconPlayerSkipForward className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
+                        <IconScan className="w-5 h-5 group-hover:scale-110 transition-transform duration-200" />
+                        <span>Analyze Content</span>
+                        <IconPlayerSkipForward className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-200" />
                     </>
                 )}
             </button>
+
             {/* Error Display */}
             {error && (
-                <div className="p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg mb-4">
-                    <p className="text-sm text-red-700 dark:text-red-300 font-medium">❌ Error</p>
-                    <p className="text-xs text-red-600 dark:text-red-400">{error}</p>
+                <div className="p-4 bg-red-100/50 dark:bg-red-900/20 backdrop-blur-sm border border-red-200/60 dark:border-red-500/30 rounded-2xl mb-6"
+                     style={{
+                         boxShadow: `
+                             inset 1px 1px 0px rgba(255, 255, 255, 0.6),
+                             inset -1px -1px 0px rgba(255, 255, 255, 0.6)
+                         `
+                     }}>
+                    <div className="flex items-center gap-3">
+                        <div className="p-1.5 rounded-xl bg-red-200/60 dark:bg-red-800/40 backdrop-blur-sm">
+                            <span className="text-red-700 dark:text-red-300 text-sm">⚠️</span>
+                        </div>
+                        <div>
+                            <p className="text-sm font-medium text-red-800 dark:text-red-200">Analysis Error</p>
+                            <p className="text-xs text-red-700 dark:text-red-300">{error}</p>
+                        </div>
+                    </div>
                 </div>
             )}
 
             {/* Results Display */}
             {result ? (
-                <div className="p-4 bg-gradient-to-br from-green-50/50 via-blue-50/30 to-purple-50/50 dark:from-green-950/30 dark:via-blue-900/20 dark:to-purple-950/30 border border-green-100/50 dark:border-green-800/30 rounded-lg shadow-sm backdrop-blur-lg relative overflow-hidden max-h-96 overflow-y-auto">
-                    <div className="relative">
-                        <div className="mb-4">
-                            <h4 className="text-sm font-semibold text-green-800 dark:text-green-300 mb-2">
-                                ✅ Analysis Complete
+                <div className="flex-1 p-6 bg-white/40 dark:bg-white/10 backdrop-blur-sm border border-white/50 dark:border-white/20 rounded-2xl max-h-80 overflow-y-auto scrollbar-hide"
+                     style={{
+                         boxShadow: `
+                             inset 1px 1px 0px rgba(255, 255, 255, 0.7),
+                             inset -1px -1px 0px rgba(255, 255, 255, 0.7),
+                             0px 6px 20px rgba(0, 0, 0, 0.1),
+                             inset 0px 4px 8px rgba(255, 255, 255, 0.3)
+                         `
+                     }}>
+                    <div className="flex items-center gap-3 mb-6">
+                        <div className="p-2 rounded-xl bg-white/60 dark:bg-white/20 backdrop-blur-sm"
+                             style={{
+                                 boxShadow: `
+                                     inset 1px 1px 0px rgba(255, 255, 255, 0.8),
+                                     inset -1px -1px 0px rgba(255, 255, 255, 0.8)
+                                 `
+                             }}>
+                            <span className="text-green-600 dark:text-green-400 text-lg">✨</span>
+                        </div>
+                        <div>
+                            <h4 className="text-lg font-semibold text-gray-800 dark:text-gray-200">
+                                Analysis Complete
                             </h4>
-                            <div className="space-y-2 text-xs">
-                                <div className="break-words">
-                                    <span className="font-medium text-gray-700 dark:text-gray-300">Original:</span>
-                                    <div className="ml-2 text-gray-600 dark:text-gray-400 break-all">"{result.original_text}"</div>
-                                </div>
-                                {result.algospeak_detected && (
-                                    <div className="break-words">
-                                        <span className="font-medium text-orange-700 dark:text-orange-300">Normalized:</span>
-                                        <div className="ml-2 text-orange-600 dark:text-orange-400 break-all">"{result.normalized_text}"</div>
-                                    </div>
-                                )}
-                            </div>
+                            <p className="text-xs text-gray-600 dark:text-gray-400">
+                                Two-stage processing completed
+                            </p>
+                        </div>
+                    </div>
+
+                    <div className="space-y-4 mb-6">
+                        <div className="p-4 bg-white/50 dark:bg-white/15 backdrop-blur-sm rounded-xl border border-white/60 dark:border-white/25"
+                             style={{
+                                 boxShadow: `
+                                     inset 1px 1px 0px rgba(255, 255, 255, 0.8),
+                                     inset -1px -1px 0px rgba(255, 255, 255, 0.8)
+                                 `
+                             }}>
+                            <span className="text-xs font-medium text-gray-600/80 dark:text-gray-400/80 uppercase tracking-wide">Original Text</span>
+                            <p className="text-sm text-gray-800 dark:text-gray-200 mt-1 break-words">"{result.original_text}"</p>
                         </div>
                         
-                        <div className="flex flex-wrap gap-2 mb-4">
-                            <span className={`px-3 py-1 rounded-full text-xs font-medium ${
-                                result.algospeak_detected 
-                                    ? 'bg-orange-100 text-orange-800 dark:bg-orange-900/30 dark:text-orange-300'
-                                    : 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300'
-                            }`}>
-                                {result.algospeak_detected ? '🔍 Algospeak Detected' : '✅ Clean Text'}
-                            </span>
-                            <div className={`px-3 py-1 rounded-full text-xs font-medium break-words max-w-full ${
-                                result.classification.includes('harmful')
-                                    ? 'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300'
-                                    : 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300'
-                            }`}>
-                                <span className="break-all">🤖 {result.classification}</span>
+                        {result.algospeak_detected && (
+                            <div className="p-4 bg-amber-100/50 dark:bg-amber-900/20 backdrop-blur-sm rounded-xl border border-amber-200/60 dark:border-amber-500/30"
+                                 style={{
+                                     boxShadow: `
+                                         inset 1px 1px 0px rgba(255, 255, 255, 0.7),
+                                         inset -1px -1px 0px rgba(255, 255, 255, 0.7)
+                                     `
+                                 }}>
+                                <span className="text-xs font-medium text-amber-700/80 dark:text-amber-400/80 uppercase tracking-wide">Normalized Text</span>
+                                <p className="text-sm text-amber-800 dark:text-amber-200 mt-1 break-words">"{result.normalized_text}"</p>
                             </div>
+                        )}
+                    </div>
+                    
+                    <div className="flex flex-wrap gap-3 mb-6">
+                        <div className={`px-4 py-2 rounded-xl text-sm font-medium backdrop-blur-sm border ${
+                            result.algospeak_detected 
+                                ? 'bg-orange-100/60 dark:bg-orange-900/25 border-orange-200/70 dark:border-orange-500/30 text-orange-800 dark:text-orange-200'
+                                : 'bg-green-100/60 dark:bg-green-900/25 border-green-200/70 dark:border-green-500/30 text-green-800 dark:text-green-200'
+                        }`}
+                             style={{
+                                 boxShadow: `
+                                     inset 1px 1px 0px rgba(255, 255, 255, 0.7),
+                                     inset -1px -1px 0px rgba(255, 255, 255, 0.7)
+                                 `
+                             }}>
+                            {result.algospeak_detected ? '🔍 Algospeak Detected' : '✅ Clean Text'}
                         </div>
+                        <div className={`px-4 py-2 rounded-xl text-sm font-medium backdrop-blur-sm border ${
+                            result.classification.includes('harmful')
+                                ? 'bg-red-100/60 dark:bg-red-900/25 border-red-200/70 dark:border-red-500/30 text-red-800 dark:text-red-200'
+                                : 'bg-green-100/60 dark:bg-green-900/25 border-green-200/70 dark:border-green-500/30 text-green-800 dark:text-green-200'
+                        }`}
+                             style={{
+                                 boxShadow: `
+                                     inset 1px 1px 0px rgba(255, 255, 255, 0.7),
+                                     inset -1px -1px 0px rgba(255, 255, 255, 0.7)
+                                 `
+                             }}>
+                            🤖 {result.classification}
+                        </div>
+                    </div>
 
-                        <div className="pt-3 border-t border-green-100/30 dark:border-green-800/30">
-                            <div className="flex justify-between text-xs text-gray-500 dark:text-gray-400">
-                                <span>Stage 1: {result.stage1_status}</span>
-                                <span>Stage 2: {result.stage2_status}</span>
+                    <div className="pt-4 border-t border-white/30 dark:border-white/20">
+                        <div className="grid grid-cols-2 gap-4 text-xs">
+                            <div className="p-3 bg-white/50 dark:bg-white/15 backdrop-blur-sm rounded-xl border border-white/60 dark:border-white/25"
+                                 style={{
+                                     boxShadow: `
+                                         inset 1px 1px 0px rgba(255, 255, 255, 0.8),
+                                         inset -1px -1px 0px rgba(255, 255, 255, 0.8)
+                                     `
+                                 }}>
+                                <span className="text-gray-600 dark:text-gray-400 font-medium">Stage 1</span>
+                                <p className="text-gray-800 dark:text-gray-200 mt-1">{result.stage1_status}</p>
+                            </div>
+                            <div className="p-3 bg-white/50 dark:bg-white/15 backdrop-blur-sm rounded-xl border border-white/60 dark:border-white/25"
+                                 style={{
+                                     boxShadow: `
+                                         inset 1px 1px 0px rgba(255, 255, 255, 0.8),
+                                         inset -1px -1px 0px rgba(255, 255, 255, 0.8)
+                                     `
+                                 }}>
+                                <span className="text-gray-600 dark:text-gray-400 font-medium">Stage 2</span>
+                                <p className="text-gray-800 dark:text-gray-200 mt-1">{result.stage2_status}</p>
                             </div>
                         </div>
                     </div>
                 </div>
             ) : !isLoading && !error ? (
-                <div className="p-4 bg-gradient-to-br from-blue-50/50 via-purple-50/30 to-pink-50/50 dark:from-blue-950/30 dark:via-purple-900/20 dark:to-pink-950/30 border border-blue-100/50 dark:border-blue-800/30 rounded-lg shadow-sm backdrop-blur-lg relative overflow-hidden">
+                <div className="flex-1 p-8 bg-white/40 dark:bg-white/10 backdrop-blur-sm border border-white/50 dark:border-white/20 rounded-2xl"
+                     style={{
+                         boxShadow: `
+                             inset 1px 1px 0px rgba(255, 255, 255, 0.7),
+                             inset -1px -1px 0px rgba(255, 255, 255, 0.7),
+                             inset 0px 4px 8px rgba(255, 255, 255, 0.3)
+                         `
+                     }}>
                     <div className="text-center">
-                        <p className="text-sm text-blue-700/90 dark:text-blue-300/90 font-medium">
-                            👋 Ready to analyze content!
-                        </p>
-                        <p className="text-xs text-blue-600/70 dark:text-blue-400/70 mt-1">
-                            Enter text above and click "Analyze Content"
+                        <div className="p-4 rounded-2xl bg-white/60 dark:bg-white/20 backdrop-blur-sm inline-block mb-4 border border-white/70 dark:border-white/30"
+                             style={{
+                                 boxShadow: `
+                                     inset 1px 1px 0px rgba(255, 255, 255, 0.8),
+                                     inset -1px -1px 0px rgba(255, 255, 255, 0.8)
+                                 `
+                             }}>
+                            <span className="text-3xl">👋</span>
+                        </div>
+                        <h4 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-2">
+                            Ready to Analyze Content
+                        </h4>
+                        <p className="text-sm text-gray-600 dark:text-gray-400">
+                            Enter text above and click "Analyze Content" to see our two-stage AI moderation in action
                         </p>
                     </div>
                 </div>

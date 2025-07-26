@@ -111,8 +111,11 @@ const Slide = ({ slide, index, current, handleSlideClick }: SlideProps) => {
           )}
         </div>
         <article
-          className={`relative p-[3vmin] max-w-4xl transition-opacity duration-1000 ease-in-out overflow-y-auto max-h-[60vmin] ${current === index ? "opacity-100 visible" : "opacity-0 invisible"
-            }`}
+          className={`relative p-[3vmin] max-w-4xl transition-opacity duration-1000 ease-in-out overflow-y-auto max-h-[60vmin] scrollbar-hide ${
+            current === index ? "opacity-100 visible" : "opacity-0 invisible"
+          } ${
+            src && src.trim() !== "" && title.includes("TRAINING RESULTS") ? "ml-[30%] mr-2 max-w-xl bg-black/80 backdrop-blur-sm rounded-lg text-xs" : ""
+          }`}
         >
           <h2 className="text-lg md:text-2xl lg:text-3xl font-bold mb-2 relative">
             {title}
@@ -127,7 +130,15 @@ const Slide = ({ slide, index, current, handleSlideClick }: SlideProps) => {
               {content.map((line, idx) => (
                 <div key={idx} className={line === "" ? "h-2" : ""}>
                   {line && (
-                    <p className={line.startsWith("•") ? "ml-4" : line.startsWith("🔍") || line.startsWith("📊") || line.startsWith("🏗️") || line.startsWith("🤖") || line.startsWith("⚙️") || line.startsWith("📈") || line.startsWith("❌") || line.startsWith("✅") || line.startsWith("🏆") || line.startsWith("🚀") || line.startsWith("💼") || line.startsWith("🌍") || line.startsWith("🔮") ? "font-semibold text-yellow-300 mt-3" : ""}>
+                    <p className={
+                      line.startsWith("•") ? "ml-4" : 
+                      line.startsWith("🔍") || line.startsWith("📊") || line.startsWith("🏗️") || line.startsWith("🤖") || line.startsWith("⚙️") || line.startsWith("📈") || line.startsWith("❌") || line.startsWith("✅") || line.startsWith("🏆") || line.startsWith("🚀") || line.startsWith("💼") || line.startsWith("🌍") || line.startsWith("🔮") || line.startsWith("📋") ? "font-semibold text-yellow-300 mt-3" :
+                      line.startsWith("1️⃣") ? "font-bold text-cyan-300 mt-2" :
+                      line.startsWith("2️⃣") ? "font-bold text-purple-300 mt-2" :
+                      line.startsWith("3️⃣") ? "font-bold text-orange-300 mt-2" :
+                      line.startsWith("4️⃣") ? "font-bold text-pink-300 mt-2" :
+                      ""
+                    }>
                       {line}
                     </p>
                   )}
